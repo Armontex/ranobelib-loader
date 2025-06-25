@@ -1,0 +1,17 @@
+[project]
+name = "ranobelib-loader"
+version = "0.1.0"
+description = "Неофициальное API для загрузки контента на сайт ranobelib."
+authors = [{name = "Armontex", email = "windle1337@gmail.com"}]
+readme = "README.md"
+license = {file = "LICENSE.md"}
+requires-python = ">=3.10"
+classifiers = [
+    "License :: OSI Approved :: BSD License",
+]
+dependencies = [
+    "lxml==5.4.0",
+    "Markdown==3.8.2",
+    "prosemirror==0.5.2",
+    "Requests==2.32.4"
+]
