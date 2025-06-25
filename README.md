@@ -1,4 +1,3 @@
-```markdown
 # Ranobelib Loader
 
 Неофициальное API для загрузки контента на сайт Ranobelib.me.
