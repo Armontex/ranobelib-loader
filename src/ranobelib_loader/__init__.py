@@ -48,20 +48,23 @@ class RanobelibLoader:
             ) -> Response:
         """
         Args:
-            branch_id (int): id ветки
-            text (str): Текст новеллы (обычный/markdowm(md))
-            manga_id (int): id новеллы
+            branch_id (int): ID ветки
+            text (str): Текст новеллы (обычный текст или Markdown)
+            manga_id (int): ID новеллы
             name (str): Название главы
             number (int): Номер главы
             volume (int): Том
-            teams (list[int]): id команды/команд
-            publish_at (str | datetime | None, optional): Строка в формате YYYY-mm-dd HH:MM:SS или datetime или None. Время по UTC!
+            teams (list[int]): ID команды/команд
+            publish_at (str | datetime | None): Время публикации в формате "YYYY-mm-dd HH:MM:SS" (по UTC)
+            pages (Any): Страницы (по умолчанию [])
+            expired_type (int): Тип истечения (по умолчанию 0)
+            attachments (Any): Вложения (по умолчанию [])
         """
         if publish_at:
             if isinstance(publish_at, str):
                 publish_at = datetime.strptime(publish_at, "%Y-%m-%d %H:%M:%S")
             publish_at = publish_at.astimezone(timezone.utc)
-            if datetime.now(tz=timezone.utc) >= publish_at:
+            if datetime.now(tz=timezone.utc) > publish_at:
                 raise ValueError("Указывайте publish_at по UTC!")
         
         html = markdown(text)
@@ -85,8 +88,9 @@ class RanobelibLoader:
         
         with self.__get_session() as session:
             response = session.post(API_URL, json=data)
+            response.raise_for_status()
             return response
         
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 __all__ = ["RanobelibLoader"]
